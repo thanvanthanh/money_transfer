@@ -1,0 +1,1 @@
+ /Users/thanhthan/SOTATEK/money_transfer/.dart_tool/flutter_build/5d906238cde116f7bf183705ef7f7f2e/dart_build_result.json:  /Users/thanhthan/SOTATEK/money_transfer/.dart_tool/package_config.json /Users/thanhthan/SOTATEK/money_transfer/pubspec.yaml /Users/thanhthan/flutter/bin/cache/dart-sdk/version
