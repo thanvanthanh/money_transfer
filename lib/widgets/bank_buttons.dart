@@ -36,15 +36,29 @@ class _BankButtonsState extends State<BankButtons> {
     });
   }
 
-  Future<void> _openBankDeeplink(String deeplink) async {
+  Future<void> _openBankDeeplink(String deeplink, {String? fallbackUrl}) async {
     try {
-      if (await canLaunchUrl(Uri.parse(deeplink))) {
-        await launchUrl(
-          Uri.parse(deeplink),
-          mode: LaunchMode.externalApplication,
-        );
+      final uri = Uri.parse(deeplink);
+
+      // Kiểm tra xem có phải custom scheme không (momo://, zalopay://...)
+      if (deeplink.contains('://')) {
+        if (await canLaunchUrl(uri)) {
+          await launchUrl(uri, mode: LaunchMode.externalApplication);
+        } else {
+          // App chưa cài
+          if (fallbackUrl != null) {
+            _showSnackBar('📲 Chưa cài app, đang mở trang web...');
+            await launchUrl(
+              Uri.parse(fallbackUrl),
+              mode: LaunchMode.externalApplication,
+            );
+          } else {
+            _showSnackBar('❌ Chưa cài ứng dụng');
+          }
+        }
       } else {
-        _showSnackBar('❌ Không thể mở ứng dụng');
+        // URL bình thường
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
       }
     } catch (e) {
       _showSnackBar('❌ Lỗi: $e');

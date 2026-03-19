@@ -97,6 +97,7 @@ class _TransferScreenState extends State<TransferScreen> {
                           deeplink: 'momo://app',
                           logoUrl:
                               'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZcQPC-zWVyFOu9J2OGl0j2D220D49D0Z7BQ&s',
+                          fallbackUrl: '"https://momo.vn"',
                         ),
                         CustomApp(
                           name: 'ZaloPay',
@@ -104,6 +105,7 @@ class _TransferScreenState extends State<TransferScreen> {
                           deeplink: 'zalopay://app',
                           logoUrl:
                               'https://simg.zalopay.com.vn/zlp-website/assets/icon_hd_export_svg_ee6dd1e844.png',
+                          fallbackUrl: "https://zalopay.vn",
                         ),
                       ],
                     ),
