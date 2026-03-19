@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import '../config/bank_config.dart';
 
 class AccountInfoCard extends StatefulWidget {
+  const AccountInfoCard({super.key});
+
   @override
   State<AccountInfoCard> createState() => _AccountInfoCardState();
 }
