@@ -40,27 +40,30 @@ class _BankButtonsState extends State<BankButtons> {
     try {
       final uri = Uri.parse(deeplink);
 
-      if (deeplink.contains('://')) {
-        if (await canLaunchUrl(uri)) {
-          await launchUrl(uri, mode: LaunchMode.externalApplication);
+      // Debug: In ra deeplink
+      print('🔗 Deeplink: $deeplink');
+      print('📝 Fallback: $fallbackUrl');
+
+      // Thử mở
+      final launched = await launchUrl(uri, mode: LaunchMode.platformDefault);
+
+      if (!launched) {
+        print('⚠️ canLaunchUrl trả về false');
+
+        // Fallback
+        if (fallbackUrl != null && fallbackUrl.isNotEmpty) {
+          print('↪️ Mở fallback: $fallbackUrl');
+          await launchUrl(
+            Uri.parse(fallbackUrl),
+            mode: LaunchMode.platformDefault,
+          );
         } else {
-          // App chưa cài
-          if (fallbackUrl != null) {
-            _showSnackBar('📲 Chưa cài app, đang mở trang web...');
-            await launchUrl(
-              Uri.parse(fallbackUrl),
-              mode: LaunchMode.externalApplication,
-            );
-          } else {
-            _showSnackBar('❌ Chưa cài ứng dụng');
-          }
+          _showSnackBar('❌ Không có URL dự phòng');
         }
-      } else {
-        // URL bình thường
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
       }
     } catch (e) {
-      _showSnackBar('❌ Lỗi: $e');
+      print('❌ Lỗi: $e');
+      _showSnackBar('❌ Lỗi: ${e.toString()}');
     }
   }
 
@@ -180,7 +183,8 @@ class _BankButtonsState extends State<BankButtons> {
 
   Widget _buildCustomAppCard(CustomApp app) {
     return GestureDetector(
-      onTap: () => _openBankDeeplink(app.deeplink),
+      onTap: () =>
+          _openBankDeeplink(app.deeplink, fallbackUrl: app.fallbackUrl),
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: AnimatedContainer(
