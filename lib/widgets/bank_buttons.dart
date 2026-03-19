@@ -40,7 +40,6 @@ class _BankButtonsState extends State<BankButtons> {
     try {
       final uri = Uri.parse(deeplink);
 
-      // Kiểm tra xem có phải custom scheme không (momo://, zalopay://...)
       if (deeplink.contains('://')) {
         if (await canLaunchUrl(uri)) {
           await launchUrl(uri, mode: LaunchMode.externalApplication);

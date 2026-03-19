@@ -58,14 +58,16 @@ class BankApp {
 
 class CustomApp {
   final String name;
-  final String icon; // Emoji hoặc ký tự
+  final String icon;
   final String deeplink;
-  final String? logoUrl; // URL logo (optional)
+  final String? logoUrl;
+  final String? fallbackUrl;
 
   CustomApp({
     required this.name,
     required this.icon,
     required this.deeplink,
     this.logoUrl,
+    this.fallbackUrl,
   });
 }
